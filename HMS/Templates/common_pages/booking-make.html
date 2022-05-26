@@ -1,0 +1,41 @@
+<div class="container">
+
+    <div class="row py-5 h5">
+        <h2>Your reservation's imformation:</h2>
+    </div>
+    <div class="row py-1 h5">
+        <p>
+            Room Number : {{ room.number }}
+            <br>
+            First Day: {{fd}}
+            <br>
+            Last Day: {{ld}}
+            <br>
+            Room capacity : {{ room.capacity }}
+            <br>
+            Number of beds in the room : {{ room.numberOfBeds }}
+            <br>
+            Room Type : {{ room.roomType }}
+            <br>
+            Room price : {{ room.price }}
+            <br>
+            Total price : {{total}}
+        </p>
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class=row>
+            <input type="hidden" value="{{ room }}" name="roomid">
+            <input type="date" value="{{ fd }}" name="fd" class="d-none">
+            <input type="date" value="{{ ld }}" name="ld" class="d-none">
+           
+            <button type="submit" class="btn btn-info w-100 mt-3" name="bookGuestButton">Book</button>
+        </div>
+    </form>
+
+
+    {% comment %} <div class="py-3">
+        &nbsp
+    </div> {% endcomment %}
+
+</div>

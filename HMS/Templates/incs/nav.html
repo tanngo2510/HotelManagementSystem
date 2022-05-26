@@ -1,0 +1,45 @@
+<!--Admin Navbar-->
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3 " role="navigation">
+    <div class="container">
+        <a href="" class="navbar-brand">
+
+            <h2 class="text-capitalize">
+                {% if role == 'guest' %}
+                {{ request.user.first_name }} {{ request.user.last_name }}
+                {%else%}
+                {{ "Hotel Manager" }}
+                {% endif %}
+            </h2>
+        </a>
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarTags">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTags">
+            <ul class="navbar-nav ml-auto">
+                {% if role != 'guest' %}
+                <li class="nav-item dropdown p-2">
+
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'guests'%}">Guests</a>
+                        <a class="dropdown-item" href="{% url 'bookings' %}">Bookings</a>
+                        <a class="dropdown-item" href="{% url 'rooms' %}">Rooms</a>
+                    </div>
+                </li>
+                {%else%}
+                <li class="nav-item mr-3 p-2">
+                    <a href="{% url 'rooms' %}" class="nav-link">Book Room</a>
+                </li>
+                {% endif %}
+                <li class="nav-item p-2 ">
+                    <a href="{% url 'logout' %}" class="nav-link">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
