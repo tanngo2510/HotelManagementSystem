@@ -7,6 +7,6 @@ from room.models import *
 def home(request):
     role = str(request.user.groups.all()[0])
     if role != "guest":
-        return redirect("employee-profile", pk=request.user.id)
+        return redirect("admin_page", pk=request.user.id)
     else:
         return redirect("guest-profile", pk=request.user.id)

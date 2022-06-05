@@ -260,4 +260,4 @@ def employee_details(request, pk):
         "role": role,
         "employee": employee,
     }
-    return render(request, path + "employee-profile.html", context)
+    return render(request, path + "admin_page.html", context)

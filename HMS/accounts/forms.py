@@ -24,11 +24,11 @@ class editGuest(ModelForm):
         fields = ["phoneNumber"]
 
 
-class ROLES(forms.Form):
-    ROLES_TYPES = [
-        ('manager', 'manager'),
-        ('receptionist', 'receptionist'),
-        ('staff', 'staff'),
-    ]
-    ROLES_TYPES = forms.CharField(
-        widget=forms.RadioSelect(choices=ROLES_TYPES))
+# class ROLES(forms.Form):
+#     ROLES_TYPES = [
+#         ('manager', 'manager'),
+#         ('receptionist', 'receptionist'),
+#         ('staff', 'staff'),
+#     ]
+#     ROLES_TYPES = forms.CharField(
+#         widget=forms.RadioSelect(choices=ROLES_TYPES))
