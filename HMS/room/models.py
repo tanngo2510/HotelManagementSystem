@@ -7,17 +7,17 @@ from accounts.models import Guest
 
 class Room(models.Model):
     ROOM_TYPES = (
-        ('King', 'King'),
-        ('Luxury', 'Luxury'),
-        ('Normal', 'Normal'),
-        ('Economic', 'Economic'),
-
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
     )
+
     number = models.IntegerField(primary_key=True)
     capacity = models.SmallIntegerField()
     numberOfBeds = models.SmallIntegerField()
     roomType = models.CharField(max_length=20, choices=ROOM_TYPES)
-    price = models.FloatField()
+
+    price = models.FloatField() 
     statusStartDate = models.DateField(null=True)
     statusEndDate = models.DateField(null=True)
 

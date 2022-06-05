@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.models import Group, User
 
 from datetime import datetime
+from datetime import date
 import random
 # Create your views here.
 from accounts.models import *
@@ -25,7 +26,13 @@ def rooms(request):
     lastDateStr = None
 
     def chech_availability(fd, ed):
+        today = datetime.strptime(str(date.today()), '%Y-%m-%d')
+        
         availableRooms = []
+
+        if fd < today:
+           return availableRooms
+        
         for room in rooms:
             availList = []
             bookingList = Booking.objects.filter(roomNumber=room)
@@ -58,6 +65,8 @@ def rooms(request):
             lastDate = datetime.strptime(lastDateStr, '%Y-%m-%d')
 
             rooms = chech_availability(firstDay, lastDate)
+
+
 
         if "filter" in request.POST:
             if (request.POST.get("number") != ""):
@@ -97,6 +106,7 @@ def rooms(request):
         'fd': firstDayStr,
         'ld': lastDateStr
     }
+
     return render(request, path + "rooms.html", context)
 
 
@@ -200,7 +210,7 @@ def room_edit(request, pk):
         form1 = editRoom(request.POST, instance=room)
         if form1.is_valid():
             form1.save()
-            return redirect("room-profile", id=room.number)
+            return redirect("rooms")
     return render(request, path + "room-edit.html", context)
 
 @login_required(login_url='login')

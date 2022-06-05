@@ -14,10 +14,10 @@
                     <input type="number" class="form-control border border-secondary" id="item-quantity" name="beds" />
                 </div>
 
-                <div class="form-group">
-                    <label for="item-quantity"><b>Price: </b></label>
-                    <input type="number" class="form-control border border-secondary" id="item-quantity" name="price" />
-                </div>
+               <div class="form-group">
+                        <label for="item-quantity"><b>Price: </b></label>
+                        <input type="number" class="form-control border border-secondary" id="item-quantity" name="price" />
+                </div>  
             </div>
 
             <div class="col-6">
@@ -27,9 +27,23 @@
                         name="capacity" />
                 </div>
 
-                <div class="form-group">
+                {% comment %} <div class="form-group">
                     <label for="item-quantity"><b>Room Type:</b></label>
                     <input type="int" class="form-control border border-secondary" id="item-quantity" name="type" />
+                </div>  {% endcomment %}
+                <div class="form-group">
+                    <label for="item-quantity"><b>Room Type</b></label>
+                    <select name="type" required="" id="item-quantity"
+                        class="form-control border border-secondary">
+
+                        <option value="A" {% if room.roomType == 'A' %} selected {% endif %}>A</option>
+
+                        <option value="B" {% if room.roomType == 'B' %} selected {% endif %}>B
+                        </option>
+
+                        <option value="C" {% if room.roomType == 'C' %} selected {% endif %}>C
+                        </option>
+                    </select> 
                 </div>
             </div>
         </div>
