@@ -318,13 +318,13 @@ def booking_make(request):
                 "fd"), endDate=request.POST.get("ld"))
             curbooking.save()
 
-            for i in range(room.capacity-1):
-                nameid = "name" + str(i+1)
-                if request.POST.get(nameid) != "":
-                    if request.POST.get(nameid) != None:
-                        d = Dependees(booking=curbooking,
-                                      name=request.POST.get(nameid))
-                        d.save()
+            # for i in range(room.capacity-1):
+            #     nameid = "name" + str(i+1)
+            #     if request.POST.get(nameid) != "":
+            #         if request.POST.get(nameid) != None:
+            #             d = Dependees(booking=curbooking,
+            #                           name=request.POST.get(nameid))
+            #             d.save()
             context = {
                 "fd": request.POST.get("fd"),
                 "ld": request.POST.get("ld"),

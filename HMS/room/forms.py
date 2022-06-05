@@ -16,8 +16,3 @@ class editBooking(ModelForm):
         model = Booking
         fields = ["startDate", "endDate"]
 
-
-class editDependees(ModelForm):
-    class Meta:
-        model = Dependees
-        fields = ["booking", "name"]

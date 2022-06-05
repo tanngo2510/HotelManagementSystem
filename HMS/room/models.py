@@ -32,16 +32,6 @@ class Booking(models.Model):
     startDate = models.DateField()
     endDate = models.DateField()
 
-    def numOfDep(self):
-        return Dependees.objects.filter(booking=self).count()
-
     def __str__(self):
         return str(self.roomNumber) + " " + str(self.guest)
 
-
-class Dependees(models.Model):
-    booking = models.ForeignKey(Booking,   null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-
-    def str(self):
-        return str(self.booking) + " " + str(self.name)
