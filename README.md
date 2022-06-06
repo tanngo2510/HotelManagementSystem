@@ -7,6 +7,9 @@ Final Project - Group 08 - Software Engineer - HCMUS
 * 19120538 - Hồ Công Lượng
 * 19120128 - Ngô Nhật Tân
 
+
+# How to use
+
 ### In order to download and run the project ( It is assumed that Python 3 is already installed ):
 1. Install Django and Apps:
 ```shell
@@ -46,11 +49,9 @@ group = Group.objects.get(name="admin")
 ```shell
 user.groups.add(group)
 ```
-
 ```shell
 admin = Employee(user=user, salary=0)
 ```
-
 ```shell
 admin.save()
 ```
@@ -67,4 +68,3 @@ python manage.py runserver
 ```
 * This will work if correctly set up.
 
-# How to use
