@@ -24,7 +24,6 @@
                             class="form-control border border-secondary"></th>
                     <th>End Day<input type="date" name="ed" value="{{ed}}" class="form-control border border-secondary">
                     </th>
-                    <th class="pb-5">Number of Dependees</th>
                     <th class="pb-5">Total amount</th>
                     <th class="pb-5">Check Out</th>
                     <th><button type="submit" name="filter" class="btn btn-warning w-100">Filter</button></th>
@@ -41,7 +40,6 @@
                 <td>{{ b.dateOfReservation }}</td>
                 <td>{{ b.startDate }}</td>
                 <td>{{ b.endDate }}</td>
-                <td>{{ b.numOfDep }}</td>
                 <td>
                     {% for key, value in totals.items %}
                     {% if key == b %}
