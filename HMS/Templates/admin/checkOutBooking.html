@@ -1,15 +1,18 @@
+{% extends '../index.html' %}
+{% block context %}
 <div class="row justify-content-center m-5">
 
     <div class="card border-danger shadow-lg">
 
         <div class="card-body">
-
-            <p>Are you sure you want to delete This Booking : ?</p> <br>
-            <p>Room number : {{ booking.roomNumber.number }} </p> <br>
-            <p>Guest name : {{ booking.guest.user.first_name }} {{ booking.guest.user.last_name }}</p><br>
+            <p>Room number: {{ booking.roomNumber.number }} </p> <br>
+            <p>Guest name: {{ booking.guest.user.first_name }} {{ booking.guest.user.last_name }}</p><br>
             <p>from {{ booking.startDate }} to {{ booking.endDate }}</p>
+            <p>Price: {{ total_price }}</p>
 
-            <form action="{% url 'deleteBooking' booking.id %}" method="post">
+            <p>Are you sure to check out?</p>
+
+            <form action="" method="post">
                 {% csrf_token %}
                 <a class="btn btn-info" href="{% url 'bookings' %}">Cancel</a>
 
@@ -22,3 +25,4 @@
 
 </div>
 &nbsp
+{% endblock %}

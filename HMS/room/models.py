@@ -35,3 +35,15 @@ class Booking(models.Model):
     def __str__(self):
         return str(self.roomNumber) + " " + str(self.guest)
 
+class Bills(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    startDate = models.DateField()
+    endDate = models.DateField()
+    #booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    totalAmount = models.FloatField()
+    summary = models.TextField(null=True)
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.guest) + " " + str(self.totalAmount) + "$"

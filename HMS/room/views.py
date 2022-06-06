@@ -30,7 +30,7 @@ def rooms(request):
         
         availableRooms = []
 
-        if fd < today:
+        if fd < today or fd > ed:
            return availableRooms
         
         for room in rooms:
@@ -178,16 +178,16 @@ def room_profile(request, id):
             tempRoom.statusStartDate = None
             tempRoom.statusEndDate = None
             tempRoom.save()
-        if "deleteRoom" in request.POST:
-            check = True
-            for b in bookings:
-                if b.startDate <= datetime.now().date() or b.endDate >= datetime.now().date():
-                    check = False
-            if check:
-                tempRoom.delete()
-                return redirect("rooms")
-            else:
-                messages.error(request, "There is a booking in the interval!")
+        # if "deleteRoom" in request.POST:
+        #     check = True
+        #     for b in bookings:
+        #         if b.startDate <= datetime.now().date() or b.endDate >= datetime.now().date():
+        #             check = False
+        #     if check:
+        #         tempRoom.delete()
+        #         return redirect("rooms")
+        #     else:
+        #         messages.error(request, "There is a booking in the interval!")
 
     return render(request, path + "room-profile.html", context)
 
@@ -366,3 +366,337 @@ def deleteBooking(request, pk):
 
     }
     return render(request, path + "deleteBooking.html", context)
+
+# add
+# thêm
+@login_required(login_url='login')
+def checkOutBooking(request, pk):
+    role = str(request.user.groups.all()[0])
+    path = role + "/"
+
+    booking = Booking.objects.get(id=pk)
+    start_date = datetime.strptime(
+        str(booking.startDate), "%Y-%m-%d")
+    end_date = datetime.strptime(str(booking.endDate), "%Y-%m-%d")
+    numberOfDays = abs((end_date-start_date).days)
+    # get room price:
+    price = Room.objects.get(number=booking.roomNumber.number).price
+    total_price = price * numberOfDays
+    if request.method == "POST":
+        bill = Bills(room=booking.roomNumber, guest=booking.guest,
+                     startDate=booking.startDate, endDate=booking.endDate, totalAmount=total_price)
+        bill.save()
+        booking.delete()
+        return redirect('bookings')
+
+    context = {
+        "role": role,
+        'booking': booking,
+        'total_price': total_price
+
+    }
+    return render(request, path + "checkOutBooking.html", context)
+
+
+@login_required(login_url='login')
+def monthlyReport(request):
+    role = str(request.user.groups.all()[0])
+    path = role + "/"
+    bills = Bills.objects.all()
+    bookings = Booking.objects.all()
+    total_turnover = 0.00000001
+    ratio = {}
+
+    for bill in bills:
+        total_turnover += bill.totalAmount
+
+    for bill in bills:
+        ratio[bill] = round(bill.totalAmount / total_turnover * 100, 1)
+    total_turnover = round(total_turnover, 1)
+
+    if request.method == "POST":
+        if "filter" in request.POST:
+            if (request.POST.get("number") != ""):
+                rooms = Room.objects.filter(
+                    number__contains=request.POST.get("number"))
+                bills = bills.filter(
+                    room__in=rooms)
+                bookings = bookings.filter(
+                    roomNumber__in=rooms)
+
+            if (request.POST.get("type") != ""):
+                rooms = Room.objects.filter(
+                    roomType__contains=request.POST.get("type"))
+                bills = bills.filter(
+                    room__in=rooms)
+                bookings = bookings.filter(
+                    roomNumber__in=rooms)
+
+            if (request.POST.get("fd") != ""):
+                bills = bills.filter(
+                    startDate__gte=request.POST.get("fd"))
+                bookings = bookings.filter(
+                    startDate__gte=request.POST.get("fd"))
+
+            if (request.POST.get("ed") != ""):
+                bills = bills.filter(
+                    endDate__lte=request.POST.get("ed"))
+                bookings = bookings.filter(
+                    endDate__lte=request.POST.get("ed"))
+
+            # tính lại tổng tiền và tỉ lệ %
+            total_turnover = 0.00000001
+            for bill in bills:
+                total_turnover += bill.totalAmount
+
+            ratio = {}
+            for bill in bills:
+                ratio[bill] = round(bill.totalAmount / total_turnover * 100, 1)
+            total_turnover = round(total_turnover, 1)
+            context = {
+                "role": role,
+                'bookings': bookings,
+                "total_bookings": len(bookings),
+                "total_checked_out": len(bills),
+                "total_turnover": total_turnover,
+                "bills": bills,
+                "ratio": ratio,
+                "type": request.POST.get("type"),
+                "number": request.POST.get("number"),
+                "fd": request.POST.get("fd"),
+                "ed": request.POST.get("ed")
+            }
+            return render(request, path + "monthly_report.html", context)
+
+    context = {
+        "role": role,
+        'bookings': bookings,
+        "total_bookings": len(bookings),
+        "total_checked_out": len(bills),
+        "total_turnover": total_turnover,
+        "bills": bills,
+        "ratio": ratio
+    }
+    return render(request, path + "monthly_report.html", context)
+
+
+@login_required(login_url='login')
+def roomTypeReport(request):
+    role = str(request.user.groups.all()[0])
+    path = role + "/"
+    bills = Bills.objects.all()
+    bookings = Booking.objects.all()
+    total_turnover = 0.00000001
+
+    total_turnover_type = {}
+    total_booking_type = {}
+    total_checkedout_type = {}
+    ratio = {}
+
+    # lấy các loại phòng
+    rooms = Room.objects.all()
+    room = rooms[0]
+    for i, j in room.ROOM_TYPES:
+        total_turnover_type[i] = 0
+        total_booking_type[i] = 0
+        total_checkedout_type[i] = 0
+        ratio[i] = 0
+
+    # total_turnover_type = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
+    # total_booking_type = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
+    # total_checkedout_type = {'King': 0,
+    #                          'Luxury': 0, 'Normal': 0, 'Economic': 0}
+    # ratio = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
+    for bill in bills:
+        type = bill.room.roomType
+
+        total_turnover += bill.totalAmount
+        total_turnover_type[type] += bill.totalAmount
+        total_checkedout_type[type] += 1
+
+    for booking in bookings:
+        type = booking.roomNumber.roomType
+
+        total_booking_type[type] += 1
+
+    for key, value in total_turnover_type.items():
+        ratio[key] = round(value / total_turnover * 100, 1)
+
+    if request.method == "POST":
+        if "filter" in request.POST:
+            if (request.POST.get("fd") != ""):
+                bills = bills.filter(
+                    startDate__gte=request.POST.get("fd"))
+                bookings = bookings.filter(
+                    startDate__gte=request.POST.get("fd"))
+
+            if (request.POST.get("ed") != ""):
+                bills = bills.filter(
+                    endDate__lte=request.POST.get("ed"))
+                bookings = bookings.filter(
+                    endDate__lte=request.POST.get("ed"))
+
+            # tính lại
+            total_turnover_type = {}
+            total_booking_type = {}
+            total_checkedout_type = {}
+            ratio = {}
+
+            for i, j in room.ROOM_TYPES:
+                total_turnover_type[i] = 0
+                total_booking_type[i] = 0
+                total_checkedout_type[i] = 0
+                ratio[i] = 0
+            total_turnover = 0.00000001
+            # total_turnover_type = {'King': 0,
+            #                        'Luxury': 0, 'Normal': 0, 'Economic': 0}
+            # total_booking_type = {'King': 0,
+            #                       'Luxury': 0, 'Normal': 0, 'Economic': 0}
+            # total_checkedout_type = {'King': 0,
+            #                          'Luxury': 0, 'Normal': 0, 'Economic': 0}
+            # ratio = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
+            for bill in bills:
+                type = bill.room.roomType
+
+                total_turnover += bill.totalAmount
+                total_turnover_type[type] += bill.totalAmount
+                total_checkedout_type[type] += 1
+
+            for booking in bookings:
+                type = booking.roomNumber.roomType
+
+                total_booking_type[type] += 1
+
+            for key, value in total_turnover_type.items():
+                ratio[key] = round(value / total_turnover * 100, 1)
+
+            context = {
+                "role": role,
+                "bookings": bookings,
+                "total_turnover_type": total_turnover_type,
+                "total_booking_type": total_booking_type,
+                "total_checkedout_type": total_checkedout_type,
+                "bills": bills,
+                "ratio": ratio,
+                "fd": request.POST.get("fd"),
+                "ed": request.POST.get("ed")
+            }
+            return render(request, path + "room_type_report.html", context)
+
+    context = {
+        "role": role,
+        "bookings": bookings,
+        "total_turnover_type": total_turnover_type,
+        "total_booking_type": total_booking_type,
+        "total_checkedout_type": total_checkedout_type,
+        "bills": bills,
+        "ratio": ratio
+    }
+
+    return render(request, path + "room_type_report.html", context)
+
+
+@login_required(login_url='login')
+def densityReport(request):
+    role = str(request.user.groups.all()[0])
+    path = role + "/"
+    bills = Bills.objects.all()
+    bookings = Booking.objects.all()
+
+    total_days = 0.00000001
+    total_days_room = {}
+    total_booking_room = {}
+    total_checkedout_room = {}
+    ratio = {}
+
+    # lấy các loại phòng
+    rooms = Room.objects.all()
+    for room in rooms:
+        roomNumber = room.number
+        total_days_room[roomNumber] = 0
+        total_booking_room[roomNumber] = 0
+        total_checkedout_room[roomNumber] = 0
+        ratio[roomNumber] = 0
+
+    for bill in bills:
+        roomNumber = bill.room.number
+
+        start_date = datetime.strptime(str(bill.startDate), "%Y-%m-%d")
+        end_date = datetime.strptime(str(bill.endDate), "%Y-%m-%d")
+
+        total_days += abs((end_date-start_date).days)
+        total_days_room[roomNumber] += abs((end_date-start_date).days)
+        total_checkedout_room[roomNumber] += 1
+
+    for booking in bookings:
+        roomNumber = booking.roomNumber.number
+
+        total_booking_room[roomNumber] += 1
+
+    for key, value in total_days_room.items():
+        ratio[key] = round(value / total_days * 100, 1)
+
+    if request.method == "POST":
+        if "filter" in request.POST:
+            if (request.POST.get("fd") != ""):
+                bills = bills.filter(
+                    startDate__gte=request.POST.get("fd"))
+                bookings = bookings.filter(
+                    startDate__gte=request.POST.get("fd"))
+
+            if (request.POST.get("ed") != ""):
+                bills = bills.filter(
+                    endDate__lte=request.POST.get("ed"))
+                bookings = bookings.filter(
+                    endDate__lte=request.POST.get("ed"))
+
+            # tinh lai
+            for room in rooms:
+                roomNumber = room.number
+                total_days_room[roomNumber] = 0
+                total_booking_room[roomNumber] = 0
+                total_checkedout_room[roomNumber] = 0
+                ratio[roomNumber] = 0
+
+            for bill in bills:
+                roomNumber = bill.room.number
+
+                start_date = datetime.strptime(str(bill.startDate), "%Y-%m-%d")
+                end_date = datetime.strptime(str(bill.endDate), "%Y-%m-%d")
+
+                total_days += abs((end_date-start_date).days)
+                total_days_room[roomNumber] += abs((end_date-start_date).days)
+                total_checkedout_room[roomNumber] += 1
+
+            for booking in bookings:
+                roomNumber = booking.roomNumber.number
+
+                total_booking_room[roomNumber] += 1
+
+            for key, value in total_days_room.items():
+                ratio[key] = round(value / total_days * 100, 1)
+
+            context = {
+                "role": role,
+                "bookings": bookings,
+                "total_days_room": total_days_room,
+                "total_booking_room": total_booking_room,
+                "total_checkedout_room": total_checkedout_room,
+                "bills": bills,
+                "ratio": ratio,
+                "fd": request.POST.get("fd"),
+                "ed": request.POST.get("ed")
+            }
+            return render(request, path + "density_report.html", context)
+
+    context = {
+        "role": role,
+        "bookings": bookings,
+        "total_days_room": total_days_room,
+        "total_booking_room": total_booking_room,
+        "total_checkedout_room": total_checkedout_room,
+        "bills": bills,
+        "ratio": ratio
+    }
+
+    return render(request, path + "density_report.html", context)

@@ -1,0 +1,80 @@
+{% extends '../index.html' %}
+{% block context %}
+<br>
+<div class="col d-flex justify-content-center">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <a class="btn btn-secondary active" href="{% url 'monthlyReport' %}">Overview</a>
+        <a class="btn btn-secondary active" href="{% url 'roomTypeReport' %}">Room Type</a>
+        <a class="btn btn-secondary active" href="{% url 'densityReport' %}">Density</a>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="table-header row">
+        <div class="col-sm-12 col-md-12 col-lg-4 mb-4">
+            <h2>Density Report</h2>
+        </div>
+
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead class="bg-secondary rounded">
+            <tr>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <th>Start Day<input type="date" name="fd" value="{{fd}}"
+                            class="form-control border border-secondary"></th>
+                    <th>End Day<input type="date" name="ed" value="{{ed}}" class="form-control border border-secondary">
+                    </th>
+                    <th><button type="submit" name="filter" class="btn btn-warning w-100">Filter</button></th>
+                </form>
+
+            </tr>
+
+        </thead>
+    </table>
+
+    <table class="table table-hover table-striped">
+        <thead class="bg-secondary rounded">
+            <tr>
+                <th>Room Number</th>
+                <th>Total Booking</th>
+                <th>Total Checked Out</th>
+                <th>Total Day</th>
+                <th>Ratio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in total_booking_room %}
+            <tr>
+                <td>{{ room }}</td>
+                <td>{% for key, value in total_booking_room.items %}
+                    {% if key == room %}
+                    {{ value }}
+                    {% endif %}
+                    {% endfor %}</td>
+                <td>{% for key, value in total_checkedout_room.items %}
+                    {% if key == room %}
+                    {{ value }}
+                    {% endif %}
+                    {% endfor %}</td>
+                <td>{% for key, value in total_days_room.items %}
+                    {% if key == room %}
+                    {{ value }}
+                    {% endif %}
+                    {% endfor %}</td>
+                <td>
+                    {% for key, value in ratio.items %}
+                    {% if key == room %}
+                    {{ value }}%
+                    {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}

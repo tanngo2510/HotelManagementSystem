@@ -26,6 +26,7 @@
                     </th>
                     <th class="pb-5">Number of Dependees</th>
                     <th class="pb-5">Total amount</th>
+                    <th class="pb-5">Check Out</th>
                     <th><button type="submit" name="filter" class="btn btn-warning w-100">Filter</button></th>
                 </form>
 
@@ -49,6 +50,8 @@
                     {% endfor %}
                 </td>
                 {% if role == "admin" or role == 'manager' %}
+                <td> <a href="{% url 'checkOutBooking' b.id %}" class="btn btn-info">Check&nbsp;Out</a>
+                </td>
                 <td> <a href="{% url 'deleteBooking' b.id %}"
                         class="btn btn-sm btn-outline-danger">Delete&nbsp;Booking</a></td>
                 {% endif %}
