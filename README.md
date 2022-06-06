@@ -1,4 +1,5 @@
 # HotelManagementSystem
+## Introduction
 Final Project - Group 08 - Software Engineer - HCMUS
 
 # Members
@@ -66,4 +67,14 @@ Then, start the surver
 python manage.py runserver
 ```
 * This will work if correctly set up.
+# How to deploy project on Heroku
 
+# Demo production
+
+# Current status
+
+# Future works
+
+# Reference
+* Django (3.0) Crash Course Tutorials: https://www.youtube.com/watch?v=xv_bwpA_aEA&list=PL-51WBLyFTg2vW-_6XBoUpE7vpmoR3ztO
+* Bootstrap document: https://getbootstrap.com/docs/4.1/getting-started/introduction/
