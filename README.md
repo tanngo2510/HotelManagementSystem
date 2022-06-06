@@ -6,6 +6,7 @@ Final Project - Group 08 - Software Engineer - HCMUS
 * 19120128 - Ngô Nhật Tân
 * 19120505 - Dương Thanh Hiệp
 * 19120525 - Lê Minh Hữu
+* 19120538 - Nguyễn Tường Khải
 * 19120538 - Hồ Công Lượng
 
 # How to use
@@ -19,7 +20,7 @@ pip install django-phonenumber-field[phonenumbers]
 ## Needed to create roles and admin account to add new employee accounts
 2. Change Directory to Django---Hotel-Management-System/HMS and start the Shell:
 ```shell
-python3 manage.py shell
+python manage.py shell
 ```
 * Then execute these, one by one:
 ```shell
