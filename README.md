@@ -1,7 +1,20 @@
 # HotelManagementSystem
 ## Introduction
-Final Project - Group 08 - Software Engineer - HCMUS
+Final Project - Group 08 - Introduction to Software Engineer - HCMUS
 
+This is a simple Hotel Management Website that bullt with Django.
+There are two type of users in our system: Manager and Guest.
+### Features
+#### Manager
+* Check all Guest list.
+* Check all Booking list.
+* Check out or Delete a booking.
+* Add or Edit a room.
+* Make monthly report
+#### Guest
+* Filter room information.
+* Book room.
+* Edit their infomation.
 # Members
 * 19120128 - Ngô Nhật Tân
 * 19120505 - Dương Thanh Hiệp
@@ -17,8 +30,12 @@ Final Project - Group 08 - Software Engineer - HCMUS
 pip install Django==3.1.4
 pip install django-phonenumber-field[phonenumbers]
 ```
+2. Clone project from github:
+```shell
+git clone https://github.com/leminhhuu77/HotelManagementSystem.git
+```
 ## Needed to create roles and admin account to add new employee accounts
-2. Change Directory to Django---Hotel-Management-System/HMS and start the Shell:
+2. Change Directory to HotelManagementSystem/HMS and start the Shell:
 ```shell
 python manage.py shell
 ```
