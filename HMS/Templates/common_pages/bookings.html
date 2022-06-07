@@ -32,6 +32,7 @@
             </tr>
 
         </thead>
+
         <tbody>
             {% for b in bookings %}
             <tr>
@@ -56,6 +57,30 @@
             </tr>
             {% endfor %}
         </tbody>
+
+        {% if not bookings %}
+        <style>
+            .alert-box {
+                color:#555;
+                border-radius:10px;
+                font-family:Tahoma,Geneva,Arial,sans-serif; 
+                font-size:30px;
+                padding:10px 10px 10px 36px;
+                margin:50px;
+                background-color: pink
+            }
+            .alert-box span {
+                font-weight:bold;
+                text-transform:uppercase;
+            }
+            .error {
+                border:1px solid #f5aca6;
+            }
+        </style>
+        <h1 class="text-center alert-box error">THERE ARE NO BOOKINGS FROM YOUR FILTER</h1>
+        
+        {%endif %}
+
 
     </table>
 
