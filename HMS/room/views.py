@@ -60,6 +60,11 @@ def rooms(request):
         if "dateFilter" in request.POST:
             firstDayStr = request.POST.get("fd", "")
             lastDateStr = request.POST.get("ld", "")
+            
+            ############
+            if not firstDayStr or not lastDateStr:
+                return redirect("rooms")
+            ############
 
             firstDay = datetime.strptime(firstDayStr, '%Y-%m-%d')
             lastDate = datetime.strptime(lastDateStr, '%Y-%m-%d')
@@ -128,6 +133,11 @@ def add_room(request):
         numberOfBeds = request.POST.get('beds')
         roomType = request.POST.get('type')
         price = request.POST.get('price')
+
+        
+        if not number or not numberOfBeds or not capacity or not roomType or not price:
+            return redirect('add-room')
+     
         print(capacity)
         room = Room(number=number, capacity=capacity,
                     numberOfBeds=numberOfBeds, roomType=roomType, price=price)

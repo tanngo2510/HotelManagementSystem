@@ -28,14 +28,14 @@
                     <div class="form-group col-4">
                         <label for="example-date-input" class="col-form-label">First Date</label>
                         <div class="">
-                            <input class="form-control" type="date" name="fd" value="{{fd}}" id="example-date-input">
+                            <input class="form-control" type="date" name="fd" value="{{fd}}" id="example-date-input" required>
                         </div>
                     </div>
 
                     <div class="form-group col-4">
                         <label for="example-date-input" class="col-form-label">Last Date</label>
                         <div class="">
-                            <input class="form-control" type="date" name="ld" value="{{ld}}" id="example-date-input">
+                            <input class="form-control" type="date" name="ld" value="{{ld}}" id="example-date-input" requireds>
                         </div>
                     </div>
 
@@ -71,7 +71,9 @@
         <h1 class="text-center alert-box error">ERROR: INVALID DATE</h1>
         
     {%endif %}
-
+    
+    
+    
     {% if rooms %}
         <table class="table table-hover table-striped">
             <thead class="bg-secondary rounded">
