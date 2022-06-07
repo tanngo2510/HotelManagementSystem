@@ -1,20 +1,22 @@
 # HotelManagementSystem
 ## Introduction
-Final Project - Group 08 - Introduction to Software Engineer - HCMUS
+Hotel Management System is an important management system for any lodging and boarding enterprise to succeed in business.  A fail safe and user friendly system integrated with the concepts of internet and web programming that guarantees data safety and user interactive features that builds trust among a user and the administrator which is fruitful for both the parties involved in the system. A hotel management system developed keeping these factors in mind increases the chances of a successful business substantially.
 
-This is a simple Hotel Management Website that bullt with Django.
+Final Project - Group 08 - Introduction to Software Engineer - HCMUS
+This is a simple Hotel Management Website that is built with Django.
 There are two type of users in our system: Manager and Guest.
 ### Features
 #### Manager
-* Check all Guest list.
-* Check all Booking list.
-* Check out or Delete a booking.
-* Add or Edit a room.
-* Make monthly report
+ - Guests list: information of guests who have made a reservation.
+ - Room Booking list: information of room which have been made a reservation
+ - Check out: Check-out and payment.
+ - Delete a booking: Delete the reservation information if the guest wants to change his mind.
+ - Add or Edit a room: The manager can add or edit rooms if there is a decision of the superior
+ - Make monthly report: The manager reports the hotel's situation every month.
 #### Guest
-* Filter room information.
-* Book room.
-* Edit their infomation.
+- Filter room information: Search for rooms according to their intentions.
+- Book room: Make a reservation.
+- Edit their infomation: They can change their infomation when it is wrong.
 # Members
 * 19120128 - Ngô Nhật Tân
 * 19120505 - Dương Thanh Hiệp
@@ -23,7 +25,6 @@ There are two type of users in our system: Manager and Guest.
 * 19120538 - Hồ Công Lượng
 
 # How to use
-
 ### In order to download and run the project ( It is assumed that Python 3 is already installed ):
 1. Install Django and Apps:
 ```shell
@@ -35,7 +36,7 @@ pip install django-phonenumber-field[phonenumbers]
 git clone https://github.com/leminhhuu77/HotelManagementSystem.git
 ```
 ## Needed to create roles and admin account to add new employee accounts
-2. Change Directory to HotelManagementSystem/HMS and start the Shell:
+3. Change Directory to HotelManagementSystem/HMS and start the Shell:
 ```shell
 python manage.py shell
 ```
@@ -85,6 +86,12 @@ Then, start the surver
 python manage.py runserver
 ```
 * This will work if correctly set up.
+## Working
+1. Manager login with username = 'admin' and password = 'admin123'
+2. After login, the manager add some room because the database is empty.
+3. A new guest sign up and creates a new account. Then he/she logins using usernam and password.
+4. After logging in, guest books a room. If they want to change room or delete the reservation, they should contact to admin.
+5. Guests can change their information 
 # How to deploy project on Heroku
 
 # Demo production
