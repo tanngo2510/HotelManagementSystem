@@ -81,7 +81,7 @@ admin.save()
 python manage.py makemigrations
 python manage.py migrate
 ```
-Then, start the surver
+Then, start the server
 ```shell
 python manage.py runserver
 ```
@@ -97,7 +97,6 @@ python manage.py runserver
 # Demo production
 
 # Current status
-
 # Future works
 
 # Reference
