@@ -93,7 +93,14 @@ python manage.py runserver
 4. After logging in, guest books a room. If they want to change room or delete the reservation, they should contact to admin.
 5. Guests can change their information 
 # How to deploy project on Heroku
-
+* Step 1: Login to Heroku. (https://heroku.com/)
+* Step 2: Select `new > Create new app` on the right side and create app.
+* Step 3: Select `Deploy > Deployment method > Github` and select this repository.
+* Step 4: Select `Settings > Config Vars` and add `PROJECT_PATH = HMS`.
+* Step 5: We add two buildpacks:
+	*  https://github.com/timanovsky/subdir-heroku-buildpack
+	* heroku/python
+	Buildpack heroku/python will be below.
 # Demo production
 
 # Current status
