@@ -1,0 +1,9 @@
+asgiref==3.5.2
+dj-database-url==0.5.0
+Django==3.1.4
+django-heroku==0.3.1
+django-phonenumber-field==6.1.0
+phonenumbers==8.12.49
+psycopg2==2.9.3
+pytz==2022.1
+sqlparse==0.4.2
