@@ -98,9 +98,7 @@ python manage.py runserver
 * Step 3: Select `Deploy > Deployment method > Github` and select this repository.
 * Step 4: Select `Settings > Config Vars` and add `PROJECT_PATH = HMS`.
 * Step 5: We add two buildpacks:
-	*  https://github.com/timanovsky/subdir-heroku-buildpack
-	* heroku/python
-	* Buildpack heroku/python will be below.
+	`https://github.com/timanovsky/subdir-heroku-buildpack` and `heroku/python`. Buildpack heroku/python will be below.
 # Demo production
 
 # Current status
