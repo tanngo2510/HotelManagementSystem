@@ -127,7 +127,6 @@ def add_room(request):
         elif role == 'admin':
             guest = request.user.employee
 
-        # announcement = Announcement(sender = sender, content = request.POST.get('textid'))
         number = request.POST.get('number')
         capacity = request.POST.get('capacity')
         numberOfBeds = request.POST.get('beds')
@@ -188,16 +187,6 @@ def room_profile(request, id):
             tempRoom.statusStartDate = None
             tempRoom.statusEndDate = None
             tempRoom.save()
-        # if "deleteRoom" in request.POST:
-        #     check = True
-        #     for b in bookings:
-        #         if b.startDate <= datetime.now().date() or b.endDate >= datetime.now().date():
-        #             check = False
-        #     if check:
-        #         tempRoom.delete()
-        #         return redirect("rooms")
-        #     else:
-        #         messages.error(request, "There is a booking in the interval!")
 
     return render(request, path + "room-profile.html", context)
 
@@ -328,13 +317,6 @@ def booking_make(request):
                 "fd"), endDate=request.POST.get("ld"))
             curbooking.save()
 
-            # for i in range(room.capacity-1):
-            #     nameid = "name" + str(i+1)
-            #     if request.POST.get(nameid) != "":
-            #         if request.POST.get(nameid) != None:
-            #             d = Dependees(booking=curbooking,
-            #                           name=request.POST.get(nameid))
-            #             d.save()
             context = {
                 "fd": request.POST.get("fd"),
                 "ld": request.POST.get("ld"),
@@ -377,8 +359,7 @@ def deleteBooking(request, pk):
     }
     return render(request, path + "deleteBooking.html", context)
 
-# add
-# thêm
+# Khải add 
 @login_required(login_url='login')
 def checkOutBooking(request, pk):
     role = str(request.user.groups.all()[0])
@@ -406,7 +387,6 @@ def checkOutBooking(request, pk):
 
     }
     return render(request, path + "checkOutBooking.html", context)
-
 
 @login_required(login_url='login')
 def monthlyReport(request):
@@ -512,11 +492,6 @@ def roomTypeReport(request):
         total_checkedout_type[i] = 0
         ratio[i] = 0
 
-    # total_turnover_type = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
-    # total_booking_type = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
-    # total_checkedout_type = {'King': 0,
-    #                          'Luxury': 0, 'Normal': 0, 'Economic': 0}
-    # ratio = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
     for bill in bills:
         type = bill.room.roomType
 
@@ -558,13 +533,7 @@ def roomTypeReport(request):
                 total_checkedout_type[i] = 0
                 ratio[i] = 0
             total_turnover = 0.00000001
-            # total_turnover_type = {'King': 0,
-            #                        'Luxury': 0, 'Normal': 0, 'Economic': 0}
-            # total_booking_type = {'King': 0,
-            #                       'Luxury': 0, 'Normal': 0, 'Economic': 0}
-            # total_checkedout_type = {'King': 0,
-            #                          'Luxury': 0, 'Normal': 0, 'Economic': 0}
-            # ratio = {'King': 0, 'Luxury': 0, 'Normal': 0, 'Economic': 0}
+
             for bill in bills:
                 type = bill.room.roomType
 
