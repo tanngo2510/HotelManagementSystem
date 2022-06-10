@@ -7,3 +7,5 @@ phonenumbers==8.12.49
 psycopg2==2.9.3
 pytz==2022.1
 sqlparse==0.4.2
+gunicorn
+django-crispy-forms
