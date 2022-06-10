@@ -2,12 +2,11 @@
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg py-3 " role="navigation">
     <div class="container">
         <a href="" class="navbar-brand">
-
             <h2 class="text-capitalize">
                 {% if role == 'guest' %}
-                {{ request.user.first_name }} {{ request.user.last_name }}
+                <a href="{% url 'guest-profile' user.id%}" class="nav-link">{{ request.user.first_name }} {{ request.user.last_name }}</a>
                 {%else%}
-                {{ "Hotel Manager" }}
+                <a href="{% url 'admin_page' user.id%}" class="nav-link">Hotel manager</a>
                 {% endif %}
             </h2>
         </a>
