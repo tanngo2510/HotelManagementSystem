@@ -17,6 +17,14 @@ from accounts.models import *
 from room.models import *
 from .forms import *
 
+@login_required(login_url='login')
+def home(request):
+    role = str(request.user.groups.all()[0])
+    if role != "guest":
+        return redirect("admin_page", pk=request.user.id)
+    else:
+        return redirect("guest-profile", pk=request.user.id)
+
 @ login_required(login_url='login')
 def rooms(request):
     role = str(request.user.groups.all()[0])

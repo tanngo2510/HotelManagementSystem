@@ -5,11 +5,11 @@
 
         <div class="col-sm-12 col-md-12 col-lg-5 mb-4">
             <h2>Guest List</h2>
-            <span class="text-muted">This list include guests who has a booking between these days</span>
+            <!-- <span class="text-muted">This list include guests who has a booking between these days</span> -->
         </div>
 
 
-        <div class="col-sm-12 col-md-12 col-lg-7">
+        <!-- <div class="col-sm-12 col-md-12 col-lg-7">
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="row">
@@ -38,7 +38,7 @@
                 </div>
 
             </form>
-        </div>
+        </div> -->
 
 
     </div>
@@ -48,16 +48,10 @@
             <tr>
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <th>ID<input type="number" name="id" min="0" value="{{id}}"
-                            class="form-control border border-secondary">
-                    </th>
-                    <th>Name<input type="text" name="name" value="{{name}}"
-                            class="form-control border border-secondary"></th>
-                    <th>Email<input type="text" name="email" value="{{email}}"
-                            class="form-control border border-secondary"></th>
-                    <th>Phone Number<input type="number" name="number" min="0" value="{{number}}"
-                            class="form-control border border-secondary">
-                    </th>
+                    <th>ID </th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
                     <th></th>
                 </form>
 

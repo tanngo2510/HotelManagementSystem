@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'phonenumber_field',
 
     # own
-    'hotel',
     'accounts',
     'room',
 ]
