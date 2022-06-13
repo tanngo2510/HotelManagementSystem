@@ -69,7 +69,7 @@ group = Group.objects.get(name="admin")
 user.groups.add(group)
 ```
 ```shell
-admin = Employee(user=user, salary=0)
+admin = Employee(user=user)
 ```
 ```shell
 admin.save()
