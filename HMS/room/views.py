@@ -17,7 +17,7 @@ from accounts.models import *
 from room.models import *
 from .forms import *
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def home(request):
     role = str(request.user.groups.all()[0])
     if role != "guest":
