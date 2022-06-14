@@ -22,7 +22,7 @@ There are two type of users in our system: Manager and Guest.
 * 19120505 - Dương Thanh Hiệp
 * 19120525 - Lê Minh Hữu
 * 19120538 - Nguyễn Tường Khải
-* 19120538 - Hồ Công Lượng
+* 19120572 - Hồ Công Lượng
 
 # How to use
 ### In order to download and run the project ( It is assumed that Python 3 is already installed ):
